@@ -1,0 +1,3 @@
+[submodule "lib/utils_dotnet"]
+	path = lib/utils_dotnet
+	url = git@github.com:sunbox-sudo/utils_dotnet.git
