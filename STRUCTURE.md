@@ -3,7 +3,7 @@ root /
         * git configs
     L Docs
         * Doumentation
-        * plnas
+        * plans
     L lib
         Libs go here
     L Src 
