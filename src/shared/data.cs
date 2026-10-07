@@ -1,4 +1,5 @@
 using System.Net.Mail;
+using System.Text.Json.Serialization;
 
 namespace netChat.shared.data;
 
@@ -8,12 +9,14 @@ public class User{
 	string? displayname;
 	string? passwd;
 	string? token;
-	string? username;
+	public string? username;
 }
 
 public class Message{
-	int UserID;
-	string Msg;
+	[JsonInclude]
+	public int UserID;
+	[JsonInclude]
+	public string Msg;
 	public DateTime time;
 
 	public Message(int userID, string msg){

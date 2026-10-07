@@ -7,6 +7,7 @@ namespace netChat;
 class Program
 {
 	static void Main(string[] args){
+		Console.Clear();
 		debugInit();
 
 		// call last server / client take over
