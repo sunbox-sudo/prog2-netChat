@@ -12,9 +12,10 @@ root /
         L Client
             L Client.cs
         L Shared
-            L Network.cs
-            L Message.cs
-            L Users.cs
+            L Netcode.cs
+            L Data.cs
+                * user
+                * Message
         L *Program.cs* (entry file)
     L Structure.md
     L TODO.md
