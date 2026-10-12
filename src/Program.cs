@@ -30,7 +30,7 @@ class Program
 			Environment.Exit(0);
 		}
 
-		// Procecs arguments.
+		// TODO: Procecs arguments.
 
 		Server server = new();
 		server.Start();

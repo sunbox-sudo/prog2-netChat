@@ -13,6 +13,7 @@ public class Client{
 	private string ip = "127.0.0.1";
 	private int port = 4444;
 	private TcpClient client;
+	private string userName;
 
 	public void Start(){
 		Debug.Info("Client has started");
@@ -22,12 +23,25 @@ public class Client{
 		client.Connect(address, port);
 		Debug.Info($"Client connected to server with {address}:{port}");
 
-		SendMessage();
+		Console.Write("enter a username: ");
+		userName = Console.ReadLine();
+
+		while (true){
+			CollectDataFromUser();
+		}
+	}
+
+	public void CollectDataFromUser(){
+		ConsoleKey key = Console.ReadKey(intercept: true).Key;
+		if(key == ConsoleKey.D1)
+		{
+			SendMessage();
+		}
 	}
 
 	public void SendMessage(){
-		int userID = 1;
-		string msg = "Hello World!";
+		int userID = 000001;
+		string msg = "Hello world";
 
 		Message message = new Message(userID, msg);
 		string jsonData = JsonSerializer.Serialize(message);
