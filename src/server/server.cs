@@ -1,12 +1,9 @@
 using System.Net.Sockets;
 using System.Net;
-using System.Net.Sockets;
 using netChat.shared.data;
 using utils.debug;
 using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-
 
 namespace netChat.server;
 
@@ -22,12 +19,14 @@ public class Server{
 		listener = new TcpListener(IPAddress.Any, port);
 		listener.Start();
 
+		Debug.Info($"Server started on {port}");
+
 		Debug.MinLevel = LogLevel.Trace;
 		while (true){
 			ListenForClients();
 			CheckClientsAlive();
 			ListenForMessages();
-			// this so it don't max out the core.
+			// Sleeep to not overwork.
 			Thread.Sleep(50);
 		}
 	}
@@ -63,31 +62,44 @@ public class Server{
 	public void ListenForClients(){
 		if (!listener.Pending()){ return; }
 		Debug.Info("Listening for clients");
-		TcpClient client = listener.AcceptTcpClient(); // CAN not be found where to locate?
+		TcpClient client = listener.AcceptTcpClient();
 		clients.Add(client);
 		Debug.Info("Client found");
 	}
+
 	public void ListenForMessages()	{
-		Debug.Trace("Listening for messages...");
+		Debug.Trace("Listsen: Listening for messages");
 		byte[] buffer = new byte[1024];
 
-		Debug.Trace("start of foreach");
-		foreach(TcpClient client in clients)
-		{
+		foreach(TcpClient client in clients){
 			if ( client.Available == 0 ){
-				Debug.Trace("no data Available");
+				Debug.Trace("Listen: No data Available");
 				continue;
 			}
 
-			Debug.Trace("getting stream");
+			Debug.Trace("Listen: Reading stream");
 			int length = client.GetStream().Read(buffer, 0, buffer.Length);
-			Debug.Trace($"length: {length}");
+			Debug.Trace($"Listen: Buffer length: {length}");
 			if ( length == 0 ) continue;
 			string jsonData = Encoding.Unicode.GetString(buffer, 0, length);
-			Debug.Trace($"jsonData: {jsonData}");
+			Debug.Info($"Listen: JsonData: {jsonData}");
 			Message message = JsonSerializer.Deserialize<Message>(jsonData);
-			Debug.Trace($"message: {message}");
+			Debug.Trace($"Listen: Message: {message}");
 			Console.WriteLine(message.UserID + ": " + message.Msg);
+			SendMesagesToClients(message.UserID, message.Msg);
 		}
+	}
+	public void SendMesagesToClients(int fromUserID, string msg){
+		Debug.Trace("Send: Sends measage to clients");
+		Message message = new Message("", fromUserID, msg);
+		string jsonData = JsonSerializer.Serialize(message);
+		Debug.Trace($"Send: jsonData: {jsonData}");
+
+		byte[] outData = Encoding.Unicode.GetBytes(jsonData);
+
+		foreach(TcpClient client in clients){
+			client.GetStream().Write(outData, 0, outData.Length);
+		}
+		Debug.Trace("Send: Sent to evrey client");
 	}
 }

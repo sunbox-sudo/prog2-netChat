@@ -10,6 +10,7 @@ class Program
 		Console.Clear();
 		debugInit();
 
+
 		// call last server / client take over
 		selectType(args);
 	}

@@ -14,12 +14,15 @@ public class User{
 
 public class Message{
 	[JsonInclude]
+	public string Token;
+	[JsonInclude]
 	public int UserID;
 	[JsonInclude]
 	public string Msg;
 	public DateTime time;
 
-	public Message(int userID, string msg){
+	public Message(string token, int userID, string msg){
+		this.Token = token;
 		this.UserID = userID;
 		this.Msg = msg;
 		this.time = DateTime.UtcNow;
