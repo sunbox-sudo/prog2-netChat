@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/lib/" />
+  <Folder Name="/lib/utils_dotnet/">
+    <Project Path="lib/utils_dotnet/utils_dotnet.csproj" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/netChat.Client.Core/netChat.Client.Core.csproj" />
+    <Project Path="src/netChat.Client.Tui/netChat.Client.Tui.csproj" />
+    <Project Path="src/netChat.Server/netChat.Server.csproj" />
+    <Project Path="src/netChat.Shared/netChat.Shared.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/natChat.Client.Core.Tests/natChat.Client.Core.Tests.csproj" />
+    <Project Path="tests/natChat.Server.Tests/natChat.Server.Tests.csproj" />
+    <Project Path="tests/natChat.Shared.Tests/natChat.Shared.Tests.csproj" />
+  </Folder>
+</Solution>
