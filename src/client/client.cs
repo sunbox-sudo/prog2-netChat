@@ -108,7 +108,7 @@ public class Client{
 	}
 
 	public void SendMessage(string msg){
-		Message message = new Message(token, userID, msg);
+		Message message = new Message(token, userID, userName, msg);
 		string jsonData = JsonSerializer.Serialize(message);
 
 		byte[] outData = Encoding.Unicode.GetBytes(jsonData);
@@ -145,6 +145,6 @@ public class Client{
 		// Debug.Trace($"jsonData: {jsonData}");
 		Message message = JsonSerializer.Deserialize<Message>(jsonData);
 		Debug.Trace($"message: {message}");
-		Console.WriteLine(message.UserID + ": " + message.Msg);
+		Console.WriteLine($"{message.time} {message.UserName}:  {message.Msg}");
 	}
 }
