@@ -27,12 +27,14 @@ class Program
 	static private void selectType(string[] args){
 		if (args.Length == 0){
 			Client client = new();
+
+			Debug.LogFileName = "client.log";
 			client.Start();
 			Environment.Exit(0);
 		}
 
 		// TODO: Procecs arguments.
-
+		Debug.LogFileName = "server.log";
 		Server server = new();
 		server.Start();
 	}
