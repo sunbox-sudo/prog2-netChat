@@ -32,7 +32,14 @@ public class Client{
 		Debug.MinLevel = LogLevel.Trace;
 		while (true){
 			CollectDataFromUser();
-			getMessages();
+			getMessageFromServer();
+		}
+	}
+
+	private void RunLoop(){
+		while (true){
+			CollectDataFromUser();
+			getMessageFromServer();
 		}
 	}
 
@@ -50,7 +57,7 @@ public class Client{
 			ConsoleKey key = Console.ReadKey(intercept: true).Key;
 			if(key == ConsoleKey.D1)
 			{
-				SendMessage();
+				SendMessage(getMassageFromInputTUI());
 			}
 			Thread.Sleep(20);
 		}
@@ -61,7 +68,7 @@ public class Client{
 		string? foo = "";
 
 		Console.Clear();
-		Console.WriteLine(question);
+		Console.Write(question);
 		foo = Console.ReadLine();
 		return foo;
 	}
@@ -100,17 +107,31 @@ public class Client{
 		}
 	}
 
-	public void SendMessage(){
-		string msg = "Hello world";
-
-		Message message = new Message(token, userID, msg);
+	public void SendMessage(string msg){
+		Message message = new Message(token, userID, userName, msg);
 		string jsonData = JsonSerializer.Serialize(message);
 
 		byte[] outData = Encoding.Unicode.GetBytes(jsonData);
 		client.GetStream().Write(outData, 0, outData.Length);
 	}
 
-	private void getMessages(){
+	private string getMassageFromInputTUI(){
+		string msg = "";
+
+		Console.CursorVisible = true;
+
+		Console.Write("What is your message");
+		msg = Console.ReadLine();
+		validateMessage(msg);
+		return msg;
+	}
+
+	private bool validateMessage(string msg){
+		bool foo = true;
+		return foo;
+	}
+
+	private void getMessageFromServer(){
 		Debug.Trace("Listening for messages");
 		byte[] buffer = new byte[1024];
 
@@ -124,6 +145,6 @@ public class Client{
 		// Debug.Trace($"jsonData: {jsonData}");
 		Message message = JsonSerializer.Deserialize<Message>(jsonData);
 		Debug.Trace($"message: {message}");
-		Console.WriteLine(message.UserID + ": " + message.Msg);
+		Console.WriteLine($"{message.time} {message.UserName}:  {message.Msg}");
 	}
 }

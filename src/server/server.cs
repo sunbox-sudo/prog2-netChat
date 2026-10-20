@@ -86,12 +86,13 @@ public class Server{
 			Message message = JsonSerializer.Deserialize<Message>(jsonData);
 			Debug.Trace($"Listen: Message: {message}");
 			Console.WriteLine(message.UserID + ": " + message.Msg);
-			SendMesagesToClients(message.UserID, message.Msg);
+			SendMesagesToClients(message.UserID, message.UserName, message.Msg);
 		}
 	}
-	public void SendMesagesToClients(int fromUserID, string msg){
+
+	public void SendMesagesToClients(int fromUserID, string fromUserName, string msg){
 		Debug.Trace("Send: Sends measage to clients");
-		Message message = new Message("", fromUserID, msg);
+		Message message = new Message("", fromUserID, fromUserName, msg);
 		string jsonData = JsonSerializer.Serialize(message);
 		Debug.Trace($"Send: jsonData: {jsonData}");
 
