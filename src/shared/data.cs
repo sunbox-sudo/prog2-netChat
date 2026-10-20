@@ -19,11 +19,15 @@ public class Message{
 	public int UserID;
 	[JsonInclude]
 	public string Msg;
+	[JsonInclude]
+	public string UserName;
+	[JsonInclude]
 	public DateTime time;
 
-	public Message(string token, int userID, string msg){
+	public Message(string token, int userID, string userName, string msg){
 		this.Token = token;
 		this.UserID = userID;
+		this.UserName = userName;
 		this.Msg = msg;
 		this.time = DateTime.UtcNow;
 	}
