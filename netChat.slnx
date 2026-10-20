@@ -1,4 +1,8 @@
 <Solution>
+  <Folder Name="/lib/" />
+  <Folder Name="/lib/utils_dotnet/">
+    <Project Path="lib/utils_dotnet/utils_dotnet.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/netChat.Client.Core/netChat.Client.Core.csproj" />
     <Project Path="src/netChat.Client.Tui/netChat.Client.Tui.csproj" />
