@@ -1,0 +1,26 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"        # runs when you push a tag like v1.0.0
+
+permissions:
+  contents: write   # needed to create the release
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Create archive including submodules
+        run: tar -czf release.tar.gz --exclude=.git .
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release.tar.gz
